@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Janaki D Will You Be My Valentine 💖</title>
+<title>Janaki D, Will You Be My Valentine 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Calligraphy font -->
@@ -73,7 +73,7 @@ button {
   to { transform: scale(3); opacity:1; }
 }
 
-/* Bow overlay */
+/* Bow overlay with ribbons */
 .bow-overlay {
   position: fixed;
   top:0; left:0;
@@ -82,21 +82,31 @@ button {
   display:flex;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
   opacity:0;
   pointer-events:none;
   z-index:999;
   transition: opacity 1.5s ease;
 }
+.bow-overlay.active { opacity:1; }
+
 .bow-overlay img {
-  max-width:200px;
+  width:150px;
+  height:auto;
+  margin: 10px 0;
   transform: scale(0.5);
   transition: transform 1.5s ease;
 }
-.bow-overlay.active {
-  opacity:1;
-}
 .bow-overlay.active img {
   transform: scale(1);
+}
+
+/* Horizontal ribbons */
+.ribbon.horizontal {
+  width: 100%;
+  height: 30px;
+  background: #c70039; /* red ribbon */
+  margin: 5px 0;
 }
 </style>
 </head>
@@ -105,7 +115,7 @@ button {
 
 <!-- SECTION 1: Valentine Question -->
 <div id="question" class="section active">
-  <h1>Will you be my Valentine? 💘</h1>
+  <h1>Janaki D, will you be my Valentine? 💘</h1>
   <div>
     <button onclick="goYes()">Yes</button>
     <button id="no">No</button>
@@ -127,7 +137,9 @@ button {
 
 <!-- Bow overlay -->
 <div class="bow-overlay" id="bowOverlay">
+  <div class="ribbon horizontal"></div>
   <img src="bow.png" alt="Bow">
+  <div class="ribbon horizontal"></div>
 </div>
 
 <!-- Optional audio -->
@@ -208,4 +220,3 @@ function createKiss() {
 
 </body>
 </html>
-
