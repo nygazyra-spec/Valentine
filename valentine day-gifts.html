@@ -79,26 +79,34 @@ button:hover { transform: scale(1.1); }
 
 /* Bow overlay (hidden initially) */
 #bowOverlay {
-  display: none; /* hidden initially */
   position: fixed;
-  top:0; left:0;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
+  display:flex;
   justify-content: center;
   align-items: center;
   pointer-events:none;
   z-index: 999;
+  opacity: 0;           /* hidden initially */
+  transition: opacity 1s ease;
 }
 
 #bowOverlay img {
   max-width: 80%;
   max-height: 50%;
   object-fit: contain;
-  transform: scale(0);
+  transform: scale(0);  /* shrink initially */
   transition: transform 1s ease;
 }
+
+#bowOverlay.active {
+  opacity: 1;           /* fade in */
+}
+
 #bowOverlay.active img {
-  transform: scale(1);
+  transform: scale(1);  /* pop in */
 }
 </style>
 </head>
@@ -158,15 +166,14 @@ function show(id) {
   document.getElementById(id).classList.add("active");
 }
 
-// Show beautiful bow
+// Show beautiful bow after delay
 function showBow() {
   const overlay = document.getElementById("bowOverlay");
-  overlay.style.display = "flex";       // make visible
-  setTimeout(() => overlay.classList.add("active"), 50); // scale animation
+  overlay.classList.add("active"); // fade + scale animation
 }
 
-// Bow delay
-const bowDelay = 60000; // 1 minute in milliseconds
+// Delay for bow appearance
+const bowDelay = 60000; // 1 minute
 
 // 💐 Gift 1
 function gift1() {
