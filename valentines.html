@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ffe6eb;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.section {
+  display: none;
+  height: 100vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active {
+  display: flex;
+}
+
+button {
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #ff4d6d;
+  color: white;
+}
+
+/* NO BUTTON */
+#no {
+  position: absolute;
+  background: #adb5bd;
+}
+
+/* Bouquet */
+.bouquet {
+  max-width: 85vw;
+  max-height: 80vh;
+  border-radius: 14px;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
+}
+
+/* Lyrics */
+.lyrics {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1.9rem;
+  line-height: 1.7;
+  color: #7a1c2f;
+}
+
+/* KISSES */
+.kiss {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: grow 6s forwards;
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(3);
+    opacity: 1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SECTION 1: QUESTION -->
+<div id="question" class="section active">
+  <h1>Will you be my Valentine? 💘</h1>
+  <div>
+    <button onclick="goYes()">Yes</button>
+    <button id="no">No</button>
+  </div>
+</div>
+
+<!-- SECTION 2: GIFTS -->
+<div id="menu" class="section">
+  <h1>Choose your gift 🎁</h1>
+  <button onclick="gift1()">Gift 1 💐</button>
+  <button onclick="gift2()">Gift 2 🎶</button>
+  <button onclick="gift3()">Gift 3 😘</button>
+</div>
+
+<!-- SECTION 3: CONTENT -->
+<div id="content" class="section">
+  <div id="output"></div>
+</div>
+
+<audio id="loverSong" src="lover.mp4"></audio>
+
+<script>
+const noBtn = document.getElementById("no");
+let kissInterval;
+
+/* NO BUTTON FLYING */
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+/* YES CLICK */
+function goYes() {
+  show("menu");
+}
+
+/* SHOW SECTION */
+function show(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* 💐 Bouquet */
+function gift1() {
+  show("content");
+  document.getElementById("output").innerHTML = `
+    <h1>Just for you 💖</h1>
+    <img class="bouquet" src="roses.webp">
+  `;
+}
+
+/* 🎶 Lyrics */
+function gift2() {
+  show("content");
+  document.getElementById("output").innerHTML = `
+    <div class="lyrics">
+      Ladies and gentlemen, will you please stand…<br><br>
+      With every guitar string scar on my hand,<br>
+      I take this magnetic force of a man<br>
+      to be my lover ✨
+    </div>
+  `;
+  document.getElementById("loverSong").play();
+}
+
+/* 😘 KISSES FILL SCREEN */
+function gift3() {
+  show("content");
+  document.getElementById("output").innerHTML = `<h1>Blowing kisses 😘</h1>`;
+  clearInterval(kissInterval);
+  kissInterval = setInterval(createKiss, 200);
+}
+
+function createKiss() {
+  const kiss = document.createElement("div");
+  kiss.className = "kiss";
+  kiss.innerText = "💋";
+  kiss.style.left = Math.random() * window.innerWidth + "px";
+  kiss.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(kiss);
+}
+</script>
+
+</body>
+</html>
