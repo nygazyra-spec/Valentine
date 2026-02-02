@@ -72,59 +72,64 @@ button {
   to { transform: scale(3); opacity:1; }
 }
 
-/* Bow overlay using CSS only */
+/* Bow overlay */
 .bow-overlay {
   position: fixed;
   top:0; left:0;
   width:100%;
   height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  opacity:0;
   pointer-events:none;
   z-index:999;
-  transition: opacity 1.5s ease;
 }
-.bow-overlay.active { opacity:1; }
-
-/* Bow center */
-.bow-center {
-  width:100px;
-  height:100px;
-  background:red;
-  border-radius:50%;
-  position:relative;
-  transform: scale(0.5);
-  transition: transform 1.5s ease;
-}
-.bow-overlay.active .bow-center {
-  transform: scale(1);
-}
-/* Ribbon loops */
-.bow-center::before, .bow-center::after {
-  content:"";
-  position:absolute;
-  width:50px;
-  height:20px;
-  background:red;
-  top:40%;
-  border-radius:10px;
-}
-.bow-center::before { left:-50px; transform:rotate(-30deg); }
-.bow-center::after { right:-50px; transform:rotate(30deg); }
 
 /* Horizontal ribbons */
 .ribbon {
+  position: absolute;
+  left:0;
   width:100%;
   height:30px;
   background:red;
-  margin:5px 0;
+}
+.ribbon.top { top:0; transform: scaleX(0); animation: ribbonTop 1s forwards; }
+.ribbon.bottom { bottom:0; transform: scaleX(0); animation: ribbonBottom 1s forwards; }
+
+/* Ribbon animations */
+@keyframes ribbonTop {
+  to { transform: scaleX(1); transform-origin: left; }
+}
+@keyframes ribbonBottom {
+  to { transform: scaleX(1); transform-origin: right; }
+}
+
+/* Center bow */
+.bow-center {
+  position: absolute;
+  top:50%; left:50%;
+  width:120px;
+  height:120px;
+  background:red;
+  border-radius:50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: bowPop 1s forwards 1s; /* appear after ribbons */
+}
+.bow-center::before, .bow-center::after {
+  content:"";
+  position:absolute;
+  width:60px;
+  height:25px;
+  background:red;
+  top:40%;
+  border-radius:12px;
+}
+.bow-center::before { left:-60px; transform:rotate(-30deg); }
+.bow-center::after { right:-60px; transform:rotate(30deg); }
+
+/* Bow animation */
+@keyframes bowPop {
+  to { transform: translate(-50%, -50%) scale(1); }
 }
 </style>
 </head>
-
 <body>
 
 <!-- SECTION 1: Valentine Question -->
@@ -151,9 +156,9 @@ button {
 
 <!-- Bow overlay -->
 <div class="bow-overlay" id="bowOverlay">
-  <div class="ribbon"></div>
+  <div class="ribbon top"></div>
   <div class="bow-center"></div>
-  <div class="ribbon"></div>
+  <div class="ribbon bottom"></div>
 </div>
 
 <!-- Optional audio -->
@@ -182,9 +187,15 @@ function show(id) {
   document.getElementById(id).classList.add("active");
 }
 
-// Show sweet bow
+// Animate bow overlay
 function showBow() {
-  document.getElementById("bowOverlay").classList.add("active");
+  const overlay = document.getElementById("bowOverlay");
+  overlay.style.display = "block";
+
+  // reset ribbons and bow
+  overlay.querySelector(".ribbon.top").style.animation = "ribbonTop 1s forwards";
+  overlay.querySelector(".ribbon.bottom").style.animation = "ribbonBottom 1s forwards";
+  overlay.querySelector(".bow-center").style.animation = "bowPop 1s forwards 1s";
 }
 
 // 💐 Gift 1
@@ -230,6 +241,5 @@ function createKiss() {
   document.body.appendChild(kiss);
 }
 </script>
-
 </body>
 </html>
