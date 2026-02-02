@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Gifts 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #ffe6eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.section {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.active { display: block; }
+
+button {
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #ff4d6d;
+  color: white;
+}
+
+/* Bouquet */
+.bouquet {
+  max-width: 90%;
+  height: auto;
+}
+
+/* Kisses */
+.kiss {
+  position: absolute;
+  font-size: 2rem;
+  animation: float 4s linear forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-600px) scale(1.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- GIFT MENU -->
+<div id="menu" class="section active">
+  <h1>Choose your gift 🎁</h1>
+  <button onclick="gift1()">Gift 1 💐</button>
+  <button onclick="gift2()">Gift 2 🎶</button>
+  <button onclick="gift3()">Gift 3 😘</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" class="section">
+  <div id="output"></div>
+</div>
+
+<!-- AUDIO (USER-UPLOADED FILE) -->
+<audio id="loverSong" src="lover.mp3"></audio>
+
+<script>
+function showContent(html) {
+  document.getElementById("menu").classList.remove("active");
+  document.getElementById("content").classList.add("active");
+  document.getElementById("output").innerHTML = html;
+}
+
+/* 💐 Bouquet */
+function gift1() {
+  showContent(`
+    <h1>For you 💖</h1>
+    <img class="bouquet" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93" alt="Rose Bouquet">
+  `);
+}
+
+/* 🎵 Taylor Swift */
+function gift2() {
+  showContent(`
+    <h1>💌 Ladies and gentlemen, will you please stand…</h1>
+    <p>
+      With every guitar string scar on my hand,<br>
+      I take this magnetic force of a man to be my lover ✨
+    </p>
+  `);
+  document.getElementById("loverSong").play();
+}
+
+/* 😘 Kisses */
+function gift3() {
+  showContent(`<h1>Unlimited kisses 😘</h1>`);
+  setInterval(createKiss, 300);
+}
+
+function createKiss() {
+  const kiss = document.createElement("div");
+  kiss.className = "kiss";
+  kiss.innerText = "💋";
+  kiss.style.left = Math.random() * window.innerWidth + "px";
+  kiss.style.bottom = "0px";
+  document.body.appendChild(kiss);
+  setTimeout(() => kiss.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
