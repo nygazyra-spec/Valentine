@@ -161,11 +161,12 @@ function show(id) {
 // Show beautiful bow
 function showBow() {
   const overlay = document.getElementById("bowOverlay");
-  overlay.style.display = "flex"; // make visible
-  setTimeout(() => {
-    overlay.classList.add("active"); // trigger scale animation
-  }, 50);
+  overlay.style.display = "flex";       // make visible
+  setTimeout(() => overlay.classList.add("active"), 50); // scale animation
 }
+
+// Bow delay
+const bowDelay = 60000; // 1 minute in milliseconds
 
 // 💐 Gift 1
 function gift1() {
@@ -174,7 +175,7 @@ function gift1() {
     <h1>Just for you 💖</h1>
     <img class="bouquet" src="roses.webp">
   `;
-  setTimeout(showBow, 60000);
+  setTimeout(showBow, bowDelay);
 }
 
 // 🎶 Gift 2
@@ -189,7 +190,7 @@ function gift2() {
     </div>
   `;
   document.getElementById("loverSong").play();
-  setTimeout(showBow, 60000);
+  setTimeout(showBow, bowDelay);
 }
 
 // 😘 Gift 3
@@ -198,7 +199,7 @@ function gift3() {
   document.getElementById("output").innerHTML = `<h1>Blowing kisses 😘</h1>`;
   clearInterval(kissInterval);
   kissInterval = setInterval(createKiss, 200);
-  setTimeout(showBow, 60000);
+  setTimeout(showBow, bowDelay);
 }
 
 function createKiss() {
